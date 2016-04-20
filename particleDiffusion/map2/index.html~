@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSockets Client</title>  
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<!--
+	<script src="http://localhost/draw_test03.js"></script>
+	-->
+	<script src="./draw_test03.js"></script>
+  <!--
+	<script src="draw_test03.js"></script>
+	-->
+
+ <style>
+        .axis text {
+          font: 10px sans-serif;
+        }
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          stroke-width: 2;
+          shape-rendering: crispEdges;
+        }
+    </style>
+
+</head>
+<body>
+<p>aaaaaa</p>
+<textarea cols=140 rows=10 id="debug">textarea</textarea>
+
+<div>
+<div>
+		<svg width="50" height="50">
+				<circle cx="25" cy="25" r="22"
+								fill="blue" stroke="gray" stroke-width="2"/>
+		</svg>
+</div>
+<div id="d3js" style="width:700px; height:400px;">
+
+</div>
+</div>
+<script>
+
+var _map = null;
+var _pri_map = null;
+
+var _width = 700;
+var _height = 400;
+
+
+ function getCurrentMap(maxCount, i, websocket) {
+		 if (i <= maxCount) {
+				 //doSomething();
+				 websocket.send('I am a hero');
+				 setTimeout(function(){getCurrentMap(maxCount, ++i, websocket)}, 1000);
+		 }
+ }
+
+function drawMap(map, pri_map) {
+		 $("#debug").val(map);
+
+		 //##### test
+		 //_map = [[0,1], [1,1]];
+		 //test(_map, _width, _height);
+		 //####
+		 test(map, pri_map, _width, _height);
+}
+
+ ///*
+ initialize(_width, _height);
+ var ws = new WebSocket('ws://localhost:9090/cur');
+ // Open the socket
+ ws.onopen = function(event) {
+		 // Send an initial message
+		 ws.send('I am the client and I\'m listening!');		 
+		 // Listen for messages
+		 ws.onmessage = function(event) {
+				 console.log('Client received a message',event);
+				 _map = JSON.parse(event['data']);
+				 drawMap(_map, _pri_map);
+				 _pri_map = _map;
+		 };		 
+		 // Listen for socket closes
+		 ws.onclose = function(event) {
+				 console.log('Client notified socket has closed',event);
+		 };
+		 getCurrentMap(20, 0, ws);
+
+}
+//*/
+// setup();
+</script>
+<p>bbbbbb</p>
+</body>
+
+</html>
+
+

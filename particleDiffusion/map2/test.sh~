@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+for i in $(seq 0 3);do
+    python client_

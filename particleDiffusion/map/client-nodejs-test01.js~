@@ -1,0 +1,9 @@
+
+
+var io = require('socket.io-client');
+var socket = io.connect("http://localhost:9090/cur");
+socket.on('greeting', function(data, fn) {
+    console.log("a");
+    var answer = confirm(data.message);
+    fn(answer);
+});

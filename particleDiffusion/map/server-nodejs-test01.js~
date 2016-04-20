@@ -1,0 +1,15 @@
+var io = require('websocket.io');
+
+var server = io.listen(9090, function () {
+    console.log("server ready");
+});
+
+
+server.on('connection', function (socket) {
+    //socket.emit('message', {hello: 'world'});
+    socket.on('my other evenr', function (data) {
+        console.log(data);
+
+    });
+
+});
